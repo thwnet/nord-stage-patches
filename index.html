@@ -85,14 +85,89 @@
     .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.8rem; }
     .row strong { font-size: 1.05rem; }
     .model { color: var(--soft); font-size: 0.88rem; }
-    .note { margin: 0.35rem 0 0.7rem; }
-    audio {
-      display: block;
-      width: min(100%, 28rem);
-      height: 36px;
-      margin: 0.15rem 0 0.75rem;
+    .note { margin: 0.2rem 0 0; }
+    .head { display: flex; align-items: center; gap: 1.5rem; }
+    .titles { min-width: 0; }
+    .player {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: min(100%, 22rem);
+      margin-left: auto;
+      flex: none;
+    }
+    .player audio {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .play {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      flex: none;
+      padding: 0;
+    }
+    .play .glyph {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 0 6px 10px;
+      border-color: transparent transparent transparent currentColor;
+      margin-left: 2px;
+    }
+    .play.is-on .glyph {
+      width: 10px;
+      height: 12px;
+      border: 0;
+      margin: 0;
+      background:
+        linear-gradient(currentColor, currentColor) left / 3px 100% no-repeat,
+        linear-gradient(currentColor, currentColor) right / 3px 100% no-repeat;
+    }
+    .track {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 4px;
+      margin: 0;
+      border-radius: 999px;
+      background: var(--line);
+      cursor: pointer;
+    }
+    .track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--text);
+    }
+    .track::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--text);
+    }
+    .time {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.82rem;
+      color: var(--soft);
+      min-width: 5.5rem;
+      text-align: right;
     }
     .download {
+      margin-top: 0.75rem;
       display: inline-block;
       background: #a22830;
       color: #fff;
@@ -111,6 +186,10 @@
     @media (max-width: 640px) {
       header { align-items: flex-start; }
       .controls { width: 100%; margin-left: 0; justify-content: flex-start; }
+    }
+    @media (max-width: 760px) {
+      .head { flex-wrap: wrap; }
+      .player { margin-left: 0; width: 100%; }
     }
   </style>
 </head>
@@ -160,6 +239,12 @@
       it: "Scarica",
       es: "Descargar"
     };
+    var playLabel = {
+      de: ["Abspielen", "Pause"],
+      en: ["Play", "Pause"],
+      it: ["Riproduci", "Pausa"],
+      es: ["Reproducir", "Pausa"]
+    };
     var language = "en";
 
     function savedLanguage() {
@@ -180,6 +265,97 @@
       if (file.indexOf("..") !== -1) return "";
       if (file.indexOf("patches/") !== 0) return "";
       return file;
+    }
+
+    function clock(seconds) {
+      if (!isFinite(seconds) || seconds < 0) seconds = 0;
+      var whole = Math.round(seconds);
+      var minutes = Math.floor(whole / 60);
+      var remain = whole % 60;
+      return minutes + ":" + (remain < 10 ? "0" : "") + remain;
+    }
+
+    function playerFor(src, name) {
+      var audio = document.createElement("audio");
+      audio.preload = "metadata";
+      audio.src = src;
+      audio.controls = false;
+      var box = document.createElement("div");
+      box.className = "player";
+      var play = document.createElement("button");
+      play.type = "button";
+      play.className = "play";
+      var glyph = document.createElement("span");
+      glyph.className = "glyph";
+      glyph.setAttribute("aria-hidden", "true");
+      play.appendChild(glyph);
+      var track = document.createElement("input");
+      track.className = "track";
+      track.type = "range";
+      track.min = "0";
+      track.max = "1000";
+      track.value = "0";
+      track.setAttribute("aria-label", name);
+      var time = document.createElement("span");
+      time.className = "time";
+      time.textContent = "0:00";
+      var labels = playLabel[language] || playLabel.en;
+      play.setAttribute("aria-label", labels[0]);
+
+      function paint(fraction) {
+        var pct = Math.max(0, Math.min(100, fraction * 100));
+        track.style.background = "linear-gradient(to right, var(--text) " + pct + "%, var(--line) " + pct + "%)";
+      }
+      function showTime() {
+        var duration = isFinite(audio.duration) ? audio.duration : 0;
+        time.textContent = clock(audio.currentTime) + " / " + clock(duration);
+      }
+      play.addEventListener("click", function () {
+        if (audio.paused) {
+          document.querySelectorAll("audio").forEach(function (other) {
+            if (other !== audio) other.pause();
+          });
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+      audio.addEventListener("play", function () {
+        play.classList.add("is-on");
+        play.setAttribute("aria-label", labels[1]);
+      });
+      audio.addEventListener("pause", function () {
+        play.classList.remove("is-on");
+        play.setAttribute("aria-label", labels[0]);
+      });
+      audio.addEventListener("timeupdate", function () {
+        if (track.dataset.scrubbing === "1" || !isFinite(audio.duration) || !audio.duration) return;
+        track.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+        paint(audio.currentTime / audio.duration);
+        showTime();
+      });
+      audio.addEventListener("loadedmetadata", showTime);
+      audio.addEventListener("ended", function () {
+        audio.currentTime = 0;
+        track.value = "0";
+        paint(0);
+        showTime();
+      });
+      track.addEventListener("pointerdown", function () { track.dataset.scrubbing = "1"; });
+      track.addEventListener("pointerup", function () { track.dataset.scrubbing = ""; });
+      track.addEventListener("input", function () {
+        if (!isFinite(audio.duration)) return;
+        var fraction = Number(track.value) / 1000;
+        audio.currentTime = fraction * audio.duration;
+        paint(fraction);
+        showTime();
+      });
+      paint(0);
+      box.appendChild(play);
+      box.appendChild(track);
+      box.appendChild(time);
+      box.appendChild(audio);
+      return box;
     }
 
     function safeAudio(file) {
@@ -229,28 +405,22 @@
           model.textContent = models[item.model];
           row.appendChild(model);
         }
-        body.appendChild(row);
+        var titles = document.createElement("div");
+        titles.className = "titles";
+        titles.appendChild(row);
         var note = textOf(item);
         if (note) {
           var paragraph = document.createElement("p");
           paragraph.className = "note";
           paragraph.textContent = note;
-          body.appendChild(paragraph);
+          titles.appendChild(paragraph);
         }
+        var head = document.createElement("div");
+        head.className = "head";
+        head.appendChild(titles);
         var audioFile = safeAudio(item.audio);
-        if (audioFile) {
-          var player = document.createElement("audio");
-          player.controls = true;
-          player.preload = "metadata";
-          player.src = audioFile;
-          player.setAttribute("aria-label", item.name);
-          player.addEventListener("play", function () {
-            document.querySelectorAll("audio").forEach(function (other) {
-              if (other !== player) other.pause();
-            });
-          });
-          body.appendChild(player);
-        }
+        if (audioFile) head.appendChild(playerFor(audioFile, item.name));
+        body.appendChild(head);
         var link = document.createElement("a");
         link.className = "download";
         link.href = file;
