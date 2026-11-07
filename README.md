@@ -1,6 +1,6 @@
 # Nord Stage Patches
 
-Freie Programme für den Nord Stage 3 und den Nord Stage 4.
+Freie Programme für den Nord Stage 4.
 
 Seite: https://thwnet.github.io/nord-stage-patches/
 

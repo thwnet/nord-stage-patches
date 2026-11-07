@@ -12,7 +12,7 @@
     })();
   </script>
   <title>Nord Stage Patches</title>
-  <meta name="description" content="Free programs for the Nord Stage 3 and the Nord Stage 4.">
+  <meta name="description" content="Free programs for the Nord Stage 4.">
   <style>
     html[data-theme="dark"] {
       color-scheme: dark;
@@ -85,15 +85,16 @@
     .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.8rem; }
     .row strong { font-size: 1.05rem; }
     .model { color: var(--soft); font-size: 0.88rem; }
-    .note { margin: 0.35rem 0 0; }
+    .top { display: flex; align-items: center; gap: 1rem; }
+    .titles { min-width: 0; flex: 1; }
+    .note { margin: 0.2rem 0 0; }
     .player {
       position: relative;
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      flex: 1 1 14rem;
-      min-width: 14rem;
-      margin-left: 0.6rem;
+      width: 100%;
+      margin-top: 0.75rem;
     }
     .player audio {
       position: absolute;
@@ -165,7 +166,8 @@
       text-align: right;
     }
     .download {
-      margin-top: 0.75rem;
+      margin-left: auto;
+      flex: none;
       display: inline-block;
       background: #a22830;
       color: #fff;
@@ -186,7 +188,7 @@
       .controls { width: 100%; margin-left: 0; justify-content: flex-start; }
     }
     @media (max-width: 760px) {
-      .player { flex-basis: 100%; margin-left: 0; }
+      .top { align-items: flex-start; }
     }
   </style>
 </head>
@@ -208,8 +210,8 @@
   </header>
 
   <article>
-    <p class="lead" data-de="Freie Programme für den Nord Stage 3 und den Nord Stage 4." data-en="Free programs for the Nord Stage 3 and the Nord Stage 4." data-it="Programmi gratuiti per il Nord Stage 3 e il Nord Stage 4." data-es="Programas gratuitos para el Nord Stage 3 y el Nord Stage 4.">Free programs for the Nord Stage 3 and the Nord Stage 4.</p>
-    <p data-de="Die Dateien auf dieser Seite sind frei. Geladen werden sie mit dem Nord Sound Manager. Danach schaltet NS4 Buddy diese Programme auf der Bühne um." data-en="The files on this page are free. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage." data-it="I file di questa pagina sono gratuiti. Si caricano con il Nord Sound Manager. Poi NS4 Buddy commuta questi programmi sul palco." data-es="Los archivos de esta página son gratuitos. Se cargan con el Nord Sound Manager. Después NS4 Buddy cambia estos programas en el escenario.">The files on this page are free. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage.</p>
+    <p class="lead" data-de="Freie Programme für den Nord Stage 4." data-en="Free programs for the Nord Stage 4." data-it="Programmi gratuiti per il Nord Stage 4." data-es="Programas gratuitos para el Nord Stage 4.">Free programs for the Nord Stage 4.</p>
+    <p data-de="Die Dateien auf dieser Seite sind frei und gelten für den Nord Stage 4. Geladen werden sie mit dem Nord Sound Manager. Danach schaltet NS4 Buddy diese Programme auf der Bühne um." data-en="The files on this page are free and are for the Nord Stage 4. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage." data-it="I file di questa pagina sono gratuiti e valgono per il Nord Stage 4. Si caricano con il Nord Sound Manager. Poi NS4 Buddy commuta questi programmi sul palco." data-es="Los archivos de esta página son gratuitos y valen para el Nord Stage 4. Se cargan con el Nord Sound Manager. Después NS4 Buddy cambia estos programas en el escenario.">The files on this page are free and are for the Nord Stage 4. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage.</p>
     <p id="empty" data-de="Hier ist noch kein Patch. Die ersten kommen auf diese Seite." data-en="There is no patch here yet. The first ones will appear on this page." data-it="Qui non c’è ancora nessuna patch. Le prime arriveranno su questa pagina." data-es="Aquí todavía no hay ningún patch. Los primeros aparecerán en esta página.">There is no patch here yet. The first ones will appear on this page.</p>
     <ul class="patches" id="patches" hidden></ul>
   </article>
@@ -274,9 +276,10 @@
 
     function playerFor(src, name) {
       var audio = document.createElement("audio");
-      audio.preload = "metadata";
-      audio.src = src;
+      audio.autoplay = false;
+      audio.preload = "none";
       audio.controls = false;
+      audio.src = src;
       var box = document.createElement("div");
       box.className = "player";
       var play = document.createElement("button");
@@ -402,22 +405,28 @@
           model.textContent = models[item.model];
           row.appendChild(model);
         }
-        var audioFile = safeAudio(item.audio);
-        if (audioFile) row.appendChild(playerFor(audioFile, item.name));
-        body.appendChild(row);
+        var titles = document.createElement("div");
+        titles.className = "titles";
+        titles.appendChild(row);
         var note = textOf(item);
         if (note) {
           var paragraph = document.createElement("p");
           paragraph.className = "note";
           paragraph.textContent = note;
-          body.appendChild(paragraph);
+          titles.appendChild(paragraph);
         }
         var link = document.createElement("a");
         link.className = "download";
         link.href = file;
         link.setAttribute("download", "");
         link.textContent = downloadLabel[language] || downloadLabel.en;
-        body.appendChild(link);
+        var top = document.createElement("div");
+        top.className = "top";
+        top.appendChild(titles);
+        top.appendChild(link);
+        body.appendChild(top);
+        var audioFile = safeAudio(item.audio);
+        if (audioFile) body.appendChild(playerFor(audioFile, item.name));
         li.appendChild(body);
         list.appendChild(li);
       });
