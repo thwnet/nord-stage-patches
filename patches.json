@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "name": "Jump",
+    "model": "stage4",
+    "file": "patches/Jump.ns4p",
+    "note": {
+      "de": "Für den Song Jump von Van Halen.",
+      "en": "For the song Jump by Van Halen.",
+      "it": "Per il brano Jump dei Van Halen.",
+      "es": "Para el tema Jump de Van Halen."
+    }
+  }
+]
