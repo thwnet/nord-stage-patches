@@ -277,7 +277,7 @@
     function playerFor(src, name) {
       var audio = document.createElement("audio");
       audio.autoplay = false;
-      audio.preload = "none";
+      audio.preload = "metadata";
       audio.controls = false;
       audio.src = src;
       var box = document.createElement("div");
