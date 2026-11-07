@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("ns4-theme"); } catch (e) {}
+      var theme = saved === "light" || saved === "dark" ? saved : (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <title>Privacy policy · Nord Stage Patches</title>
+  <style>
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0c0c0e;
+      --text: #f4f4f5;
+      --soft: #a1a1aa;
+      --link: #f0b4b8;
+      --chip: #2a2a2e;
+      --chip-text: #fff;
+    }
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f5f2;
+      --text: #1c1c1c;
+      --soft: #5c5c63;
+      --link: #7a2430;
+      --chip: #e4e1db;
+      --chip-text: #1c1c1c;
+    }
+    body { margin: 0; font: 18px/1.55 "Iowan Old Style", Palatino, Georgia, serif; color: var(--text); background: var(--bg); }
+    main { max-width: 40rem; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
+    h1 { font-weight: 600; font-size: 2.1rem; letter-spacing: -0.02em; margin: 0 0 0.3rem; }
+    h2 { font-size: 1.25rem; margin: 2.2rem 0 0.5rem; }
+    p, li { margin: 0.55rem 0; }
+    ul { padding-left: 1.2rem; }
+    a { color: var(--link); }
+    .meta { color: var(--soft); }
+    nav { margin: 1.2rem 0 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.2rem; }
+    nav a { margin-right: 1rem; }
+    .theme { margin-left: auto; display: flex; gap: 0.35rem; }
+    .theme button {
+      font: inherit;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--soft);
+      padding: 0.35rem 0.6rem;
+    }
+    .theme button[aria-pressed="true"] { color: var(--chip-text); background: var(--chip); }
+    @media (max-width: 640px) {
+      .theme { margin-left: 0; flex-basis: 100%; }
+    }
+    address { font-style: normal; margin: 0.6rem 0; }
+    section { display: none; }
+    html:not(:has(:target)) #en { display: block; }
+    section:target { display: block; }
+    main:not(:has(:target)) nav a[href="#en"],
+    main:has(#en:target) nav a[href="#en"],
+    main:has(#de:target) nav a[href="#de"],
+    main:has(#it:target) nav a[href="#it"],
+    main:has(#es:target) nav a[href="#es"] { font-weight: 600; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="index.html">Nord Stage Patches</a>
+      <a href="#en" lang="en">English</a>
+      <a href="#de" lang="de">Deutsch</a>
+      <a href="#it" lang="it">Italiano</a>
+      <a href="#es" lang="es">Español</a>
+      <div class="theme">
+        <button type="button" data-theme="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme="dark" aria-pressed="true">Dark</button>
+      </div>
+    </nav>
+
+    <section id="de" lang="de">
+      <h1>Datenschutzerklärung</h1>
+      <p class="meta">Nord Stage Patches · Stand 7. November 2026</p>
+      <p>Diese Seite stellt Programme für den Nord Stage 3 und den Nord Stage 4 zum freien Download bereit.</p>
+
+      <h2>Verantwortliche Stelle</h2>
+      <address>
+        Thomas Wäspi<br>
+        Birkenweg 3<br>
+        9323 Steinach<br>
+        Schweiz
+      </address>
+      <p>Anfragen zu dieser Erklärung an diese Adresse.</p>
+
+      <h2>Was diese Seite speichert</h2>
+      <p>Die Seite legt kein Konto an und verlangt keine Anmeldung. Sie misst die Nutzung nicht und setzt keine Cookies. Hell, Dunkel und die gewählte Sprache bleiben nur auf dem eigenen Gerät.</p>
+      <p>Ein Download holt die Datei, die auf der Seite verlinkt ist. Die Datei geht an den Browser. Sie wird nicht an die verantwortliche Stelle zurückgeschickt.</p>
+
+      <h2>Diese Website</h2>
+      <p>Diese Seiten sind statisch und liegen bei GitHub Pages. Sie laden keine Schriften oder Skripte von anderen Servern. Beim Aufruf und beim Download kann GitHub technische Verbindungsdaten bearbeiten. Dazu gilt die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>.</p>
+      <h2>Änderungen</h2>
+      <p>Kommt auf der Seite etwas dazu, das neue Daten speichert, sendet oder löscht, wird diese Erklärung in allen vier Sprachen nachgeführt. Die neue Fassung trägt ein neues Datum.</p>
+    </section>
+
+    <section id="en" lang="en">
+      <h1>Privacy policy</h1>
+      <p class="meta">Nord Stage Patches · 7 November 2026</p>
+      <p>This site offers programs for the Nord Stage 3 and the Nord Stage 4 as a free download.</p>
+
+      <h2>Who is responsible</h2>
+      <address>
+        Thomas Wäspi<br>
+        Birkenweg 3<br>
+        9323 Steinach<br>
+        Switzerland
+      </address>
+      <p>Questions about this policy go to this address.</p>
+
+      <h2>What this site stores</h2>
+      <p>The site creates no account and asks for no sign-in. It does not measure use and sets no cookies. Light, dark and the chosen language stay only on the device itself.</p>
+      <p>A download fetches the file linked on the page. The file goes to the browser. It is not sent back to the person responsible.</p>
+
+      <h2>This website</h2>
+      <p>These pages are static and hosted on GitHub Pages. They load no fonts or scripts from other servers. When a page is opened or a file is downloaded, GitHub may process technical connection data. GitHub’s privacy statement applies: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
+      <h2>Changes</h2>
+      <p>When the site adds something that stores, sends or deletes new data, this policy is updated in all four languages. The new version carries a new date.</p>
+    </section>
+
+    <section id="it" lang="it">
+      <h1>Informativa sulla privacy</h1>
+      <p class="meta">Nord Stage Patches · 7 novembre 2026</p>
+      <p>Questo sito offre programmi per il Nord Stage 3 e il Nord Stage 4 come download gratuito.</p>
+
+      <h2>Titolare</h2>
+      <address>
+        Thomas Wäspi<br>
+        Birkenweg 3<br>
+        9323 Steinach<br>
+        Svizzera
+      </address>
+      <p>Le richieste su questa informativa vanno a questo indirizzo.</p>
+
+      <h2>Cosa memorizza questo sito</h2>
+      <p>Il sito non crea un account e non chiede un accesso. Non misura l’uso e non imposta cookie. Chiaro, scuro e la lingua scelta restano solo sul dispositivo.</p>
+      <p>Un download prende il file collegato nella pagina. Il file va al browser. Non viene rinviato al titolare.</p>
+
+      <h2>Questo sito</h2>
+      <p>Queste pagine sono statiche e ospitate su GitHub Pages. Non caricano caratteri o script da altri server. All’apertura e al download GitHub può trattare dati tecnici di connessione. Vale l’<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">informativa sulla privacy di GitHub</a>.</p>
+      <h2>Modifiche</h2>
+      <p>Se il sito aggiunge qualcosa che memorizza, invia o cancella dati nuovi, questa informativa viene aggiornata in tutte e quattro le lingue. La nuova versione porta una nuova data.</p>
+    </section>
+
+    <section id="es" lang="es">
+      <h1>Política de privacidad</h1>
+      <p class="meta">Nord Stage Patches · 7 de noviembre de 2026</p>
+      <p>Este sitio ofrece programas para el Nord Stage 3 y el Nord Stage 4 como descarga gratuita.</p>
+
+      <h2>Responsable</h2>
+      <address>
+        Thomas Wäspi<br>
+        Birkenweg 3<br>
+        9323 Steinach<br>
+        Suiza
+      </address>
+      <p>Las consultas sobre esta política van a esta dirección.</p>
+
+      <h2>Qué guarda este sitio</h2>
+      <p>El sitio no crea una cuenta y no pide un acceso. No mide el uso y no pone cookies. Claro, oscuro y el idioma elegido se quedan solo en el dispositivo.</p>
+      <p>Una descarga toma el archivo enlazado en la página. El archivo va al navegador. No se devuelve al responsable.</p>
+
+      <h2>Este sitio</h2>
+      <p>Estas páginas son estáticas y están en GitHub Pages. No cargan fuentes ni scripts de otros servidores. Al abrirlas y al descargar, GitHub puede tratar datos técnicos de conexión. Se aplica la <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">política de privacidad de GitHub</a>.</p>
+      <h2>Cambios</h2>
+      <p>Si el sitio añade algo que guarda, envía o borra datos nuevos, esta política se actualiza en los cuatro idiomas. La nueva versión lleva una fecha nueva.</p>
+    </section>
+  </main>
+  <script>
+    var themeLabels = {
+      de: ["Hell", "Dunkel"],
+      en: ["Light", "Dark"],
+      it: ["Chiaro", "Scuro"],
+      es: ["Claro", "Oscuro"]
+    };
+
+    function paintTheme(next) {
+      document.documentElement.setAttribute("data-theme", next);
+      document.querySelectorAll(".theme button").forEach(function (button) {
+        button.setAttribute("aria-pressed", button.getAttribute("data-theme") === next ? "true" : "false");
+      });
+    }
+
+    function applyTheme(next) {
+      paintTheme(next);
+      try { localStorage.setItem("ns4-theme", next); } catch (e) {}
+    }
+
+    function themeLanguage() {
+      var id = location.hash.replace("#", "");
+      var words = themeLabels[id] || themeLabels.en;
+      var buttons = document.querySelectorAll(".theme button");
+      buttons[0].textContent = words[0];
+      buttons[1].textContent = words[1];
+    }
+
+    document.querySelectorAll(".theme button").forEach(function (button) {
+      button.addEventListener("click", function () { applyTheme(button.getAttribute("data-theme")); });
+    });
+    window.addEventListener("hashchange", themeLanguage);
+    themeLanguage();
+    paintTheme(document.documentElement.getAttribute("data-theme") || "dark");
+  </script>
+</body>
+</html>

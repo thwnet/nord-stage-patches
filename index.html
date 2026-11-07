@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("ns4-theme"); } catch (e) {}
+      var theme = saved === "light" || saved === "dark" ? saved : (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <title>Nord Stage Patches</title>
+  <meta name="description" content="Free programs for the Nord Stage 3 and the Nord Stage 4.">
+  <style>
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0c0c0e;
+      --text: #f4f4f5;
+      --muted: #e4e4e7;
+      --soft: #a1a1aa;
+      --faint: #8d8d93;
+      --link: #f0b4b8;
+      --chip: #2a2a2e;
+      --chip-text: #fff;
+      --line: rgba(255, 255, 255, 0.14);
+    }
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f5f2;
+      --text: #1c1c1c;
+      --muted: #2c2c2e;
+      --soft: #5c5c63;
+      --faint: #5c5c63;
+      --link: #7a2430;
+      --chip: #e4e1db;
+      --chip-text: #1c1c1c;
+      --line: rgba(0, 0, 0, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 17px/1.5 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    a { color: var(--link); }
+    header, article, footer { width: min(52rem, calc(100% - 2rem)); margin: 0 auto; }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1.6rem 0 0.4rem;
+      flex-wrap: wrap;
+    }
+    h1 { font-size: 1.45rem; font-weight: 650; letter-spacing: -0.03em; margin: 0; }
+    .controls { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end; }
+    .theme, .lang { display: flex; gap: 0.35rem; }
+    .theme button, .lang button {
+      font: inherit;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--soft);
+      padding: 0.35rem 0.6rem;
+    }
+    .theme button[aria-pressed="true"],
+    .lang button[aria-pressed="true"] { color: var(--chip-text); background: var(--chip); }
+    article { padding: 2.2rem 0 1rem; }
+    .lead { font-size: 1.2rem; line-height: 1.45; margin: 0.2rem 0 1rem; }
+    article p { margin: 0.75rem 0; color: var(--muted); }
+    .patches { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: 0.8rem; }
+    .patches li {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.95rem 1.05rem 1.05rem;
+    }
+    .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.8rem; }
+    .row strong { font-size: 1.05rem; }
+    .model { color: var(--soft); font-size: 0.88rem; }
+    .note { margin: 0.35rem 0 0.7rem; }
+    .download {
+      display: inline-block;
+      background: #a22830;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.92rem;
+    }
+    footer {
+      padding: 0.5rem 0 3rem;
+      color: var(--faint);
+      font-size: 0.92rem;
+    }
+    footer p { margin: 0.45rem 0; }
+    footer nav { display: flex; gap: 1rem; }
+    @media (max-width: 640px) {
+      header { align-items: flex-start; }
+      .controls { width: 100%; margin-left: 0; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Nord Stage Patches</h1>
+    <div class="controls">
+      <div class="theme">
+        <button type="button" data-theme="light" data-de="Hell" data-en="Light" data-it="Chiaro" data-es="Claro" aria-pressed="false">Light</button>
+        <button type="button" data-theme="dark" data-de="Dunkel" data-en="Dark" data-it="Scuro" data-es="Oscuro" aria-pressed="true">Dark</button>
+      </div>
+      <div class="lang">
+        <button type="button" data-lang="de" aria-pressed="false">Deutsch</button>
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <button type="button" data-lang="it" aria-pressed="false">Italiano</button>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </header>
+
+  <article>
+    <p class="lead" data-de="Freie Programme für den Nord Stage 3 und den Nord Stage 4." data-en="Free programs for the Nord Stage 3 and the Nord Stage 4." data-it="Programmi gratuiti per il Nord Stage 3 e il Nord Stage 4." data-es="Programas gratuitos para el Nord Stage 3 y el Nord Stage 4.">Free programs for the Nord Stage 3 and the Nord Stage 4.</p>
+    <p data-de="Die Dateien auf dieser Seite sind frei. Geladen werden sie mit dem Nord Sound Manager. Danach schaltet NS4 Buddy diese Programme auf der Bühne um." data-en="The files on this page are free. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage." data-it="I file di questa pagina sono gratuiti. Si caricano con il Nord Sound Manager. Poi NS4 Buddy commuta questi programmi sul palco." data-es="Los archivos de esta página son gratuitos. Se cargan con el Nord Sound Manager. Después NS4 Buddy cambia estos programas en el escenario.">The files on this page are free. Load them with the Nord Sound Manager. NS4 Buddy then switches these programs on stage.</p>
+    <p id="empty" data-de="Hier ist noch kein Patch. Die ersten kommen auf diese Seite." data-en="There is no patch here yet. The first ones will appear on this page." data-it="Qui non c’è ancora nessuna patch. Le prime arriveranno su questa pagina." data-es="Aquí todavía no hay ningún patch. Los primeros aparecerán en esta página.">There is no patch here yet. The first ones will appear on this page.</p>
+    <ul class="patches" id="patches" hidden></ul>
+  </article>
+
+  <footer>
+    <nav>
+      <a href="datenschutz.html" data-de="Datenschutz" data-en="Privacy" data-it="Privacy" data-es="Privacidad">Privacy</a>
+      <a href="https://thwnet.github.io/ns4-buddy/">NS4 Buddy</a>
+    </nav>
+    <p data-de="Nord Stage ist eine Marke von Clavia. Diese Seite gehört nicht zu Clavia." data-en="Nord Stage is a trademark of Clavia. This site is not part of Clavia." data-it="Nord Stage è un marchio di Clavia. Questo sito non fa parte di Clavia." data-es="Nord Stage es una marca de Clavia. Este sitio no forma parte de Clavia.">Nord Stage is a trademark of Clavia. This site is not part of Clavia.</p>
+  </footer>
+
+  <script>
+    var models = {
+      stage3: "Nord Stage 3",
+      stage4: "Nord Stage 4"
+    };
+    var downloadLabel = {
+      de: "Herunterladen",
+      en: "Download",
+      it: "Scarica",
+      es: "Descargar"
+    };
+    var language = "en";
+
+    function savedLanguage() {
+      try {
+        var stored = localStorage.getItem("nord-patches-lang");
+        if (stored === "de" || stored === "en" || stored === "it" || stored === "es") return stored;
+      } catch (e) {}
+      return "en";
+    }
+
+    function textOf(item) {
+      var note = item.note || {};
+      return note[language] || note.en || note.de || "";
+    }
+
+    function safeFile(file) {
+      if (typeof file !== "string") return "";
+      if (file.indexOf("..") !== -1) return "";
+      if (file.indexOf("patches/") !== 0) return "";
+      return file;
+    }
+
+    function render(items) {
+      var list = document.getElementById("patches");
+      var empty = document.getElementById("empty");
+      list.replaceChildren();
+      var visible = (items || []).filter(function (item) { return item && item.name && safeFile(item.file); });
+      if (!visible.length) {
+        list.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      list.hidden = false;
+      visible.forEach(function (item) {
+        var li = document.createElement("li");
+        var row = document.createElement("div");
+        row.className = "row";
+        var name = document.createElement("strong");
+        name.textContent = item.name;
+        row.appendChild(name);
+        if (models[item.model]) {
+          var model = document.createElement("span");
+          model.className = "model";
+          model.textContent = models[item.model];
+          row.appendChild(model);
+        }
+        li.appendChild(row);
+        var note = textOf(item);
+        if (note) {
+          var paragraph = document.createElement("p");
+          paragraph.className = "note";
+          paragraph.textContent = note;
+          li.appendChild(paragraph);
+        }
+        var link = document.createElement("a");
+        link.className = "download";
+        link.href = safeFile(item.file);
+        link.setAttribute("download", "");
+        link.textContent = downloadLabel[language] || downloadLabel.en;
+        li.appendChild(link);
+        list.appendChild(li);
+      });
+    }
+
+    var patches = [];
+
+    function apply(next) {
+      language = next;
+      document.documentElement.lang = next;
+      document.querySelectorAll("[data-de]").forEach(function (el) {
+        var value = el.getAttribute("data-" + next);
+        if (value) el.textContent = value;
+      });
+      document.querySelectorAll(".lang button").forEach(function (button) {
+        button.setAttribute("aria-pressed", button.getAttribute("data-lang") === next ? "true" : "false");
+      });
+      try { localStorage.setItem("nord-patches-lang", next); } catch (e) {}
+      render(patches);
+    }
+
+    function paintTheme(next) {
+      document.documentElement.setAttribute("data-theme", next);
+      document.querySelectorAll(".theme button").forEach(function (button) {
+        button.setAttribute("aria-pressed", button.getAttribute("data-theme") === next ? "true" : "false");
+      });
+    }
+
+    function applyTheme(next) {
+      paintTheme(next);
+      try { localStorage.setItem("ns4-theme", next); } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang button").forEach(function (button) {
+      button.addEventListener("click", function () { apply(button.getAttribute("data-lang")); });
+    });
+    document.querySelectorAll(".theme button").forEach(function (button) {
+      button.addEventListener("click", function () { applyTheme(button.getAttribute("data-theme")); });
+    });
+    paintTheme(document.documentElement.getAttribute("data-theme") || "dark");
+    apply(savedLanguage());
+
+    fetch("patches.json")
+      .then(function (response) { return response.json(); })
+      .then(function (items) {
+        patches = Array.isArray(items) ? items : [];
+        render(patches);
+      })
+      .catch(function () { render([]); });
+  </script>
+</body>
+</html>
