@@ -73,10 +73,15 @@
     article p { margin: 0.75rem 0; color: var(--muted); }
     .patches { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: 0.8rem; }
     .patches li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 0.95rem 1.05rem 1.05rem;
     }
+    .format { width: 48px; height: 48px; flex: none; }
+    .body { min-width: 0; }
     .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.8rem; }
     .row strong { font-size: 1.05rem; }
     .model { color: var(--soft); font-size: 0.88rem; }
@@ -140,6 +145,9 @@
       stage3: "Nord Stage 3",
       stage4: "Nord Stage 4"
     };
+    var formatIcons = {
+      ns4p: { src: "icons/ns4p.png", label: "Nord Stage 4 Program" }
+    };
     var downloadLabel = {
       de: "Herunterladen",
       en: "Download",
@@ -181,7 +189,21 @@
       empty.hidden = true;
       list.hidden = false;
       visible.forEach(function (item) {
+        var file = safeFile(item.file);
         var li = document.createElement("li");
+        var ext = file.split(".").pop().toLowerCase();
+        var format = formatIcons[ext];
+        if (format) {
+          var icon = document.createElement("img");
+          icon.className = "format";
+          icon.src = format.src;
+          icon.alt = format.label;
+          icon.width = 48;
+          icon.height = 48;
+          li.appendChild(icon);
+        }
+        var body = document.createElement("div");
+        body.className = "body";
         var row = document.createElement("div");
         row.className = "row";
         var name = document.createElement("strong");
@@ -193,20 +215,21 @@
           model.textContent = models[item.model];
           row.appendChild(model);
         }
-        li.appendChild(row);
+        body.appendChild(row);
         var note = textOf(item);
         if (note) {
           var paragraph = document.createElement("p");
           paragraph.className = "note";
           paragraph.textContent = note;
-          li.appendChild(paragraph);
+          body.appendChild(paragraph);
         }
         var link = document.createElement("a");
         link.className = "download";
-        link.href = safeFile(item.file);
+        link.href = file;
         link.setAttribute("download", "");
         link.textContent = downloadLabel[language] || downloadLabel.en;
-        li.appendChild(link);
+        body.appendChild(link);
+        li.appendChild(body);
         list.appendChild(li);
       });
     }
