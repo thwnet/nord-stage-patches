@@ -14,6 +14,7 @@ Seite: https://thwnet.github.io/nord-stage-patches/
   "name": "Name",
   "model": "stage4",
   "file": "patches/datei.ns4p",
+  "audio": "audio/datei.mp3",
   "note": {
     "de": "Kurz",
     "en": "Short",
@@ -23,4 +24,4 @@ Seite: https://thwnet.github.io/nord-stage-patches/
 }
 ```
 
-`model` ist `stage3` oder `stage4`. `file` beginnt mit `patches/` und enthält kein `..`.
+`model` ist `stage3` oder `stage4`. `file` beginnt mit `patches/` und enthält kein `..`. `audio` ist optional, beginnt mit `audio/` und ist eine `.mp3`, `.m4a` oder `.wav`.

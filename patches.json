@@ -3,6 +3,7 @@
     "name": "Jump",
     "model": "stage4",
     "file": "patches/Jump.ns4p",
+    "audio": "audio/jump.mp3",
     "note": {
       "de": "Für den Song Jump von Van Halen.",
       "en": "For the song Jump by Van Halen.",

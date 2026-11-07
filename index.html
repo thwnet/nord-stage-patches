@@ -86,6 +86,12 @@
     .row strong { font-size: 1.05rem; }
     .model { color: var(--soft); font-size: 0.88rem; }
     .note { margin: 0.35rem 0 0.7rem; }
+    audio {
+      display: block;
+      width: min(100%, 28rem);
+      height: 36px;
+      margin: 0.15rem 0 0.75rem;
+    }
     .download {
       display: inline-block;
       background: #a22830;
@@ -176,6 +182,14 @@
       return file;
     }
 
+    function safeAudio(file) {
+      if (typeof file !== "string") return "";
+      if (file.indexOf("..") !== -1) return "";
+      if (file.indexOf("audio/") !== 0) return "";
+      if (!/\.(mp3|m4a|wav)$/i.test(file)) return "";
+      return file;
+    }
+
     function render(items) {
       var list = document.getElementById("patches");
       var empty = document.getElementById("empty");
@@ -222,6 +236,20 @@
           paragraph.className = "note";
           paragraph.textContent = note;
           body.appendChild(paragraph);
+        }
+        var audioFile = safeAudio(item.audio);
+        if (audioFile) {
+          var player = document.createElement("audio");
+          player.controls = true;
+          player.preload = "metadata";
+          player.src = audioFile;
+          player.setAttribute("aria-label", item.name);
+          player.addEventListener("play", function () {
+            document.querySelectorAll("audio").forEach(function (other) {
+              if (other !== player) other.pause();
+            });
+          });
+          body.appendChild(player);
         }
         var link = document.createElement("a");
         link.className = "download";
